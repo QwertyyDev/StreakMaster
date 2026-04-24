@@ -1,0 +1,38 @@
+name: StreakMaster
+version: 1.0.1
+main: dev.qwerty.streakmaster.StreakMaster
+api-version: 1.13
+author: Qwertydev
+softdepend: [PlaceholderAPI]
+
+commands:
+  streak:
+    description: StreakMaster admin commands
+    usage: /streak <add|remove|set|reset|addrecord|removerecord|reload> [args]
+    permission: streakmaster.admin
+
+permissions:
+  streakmaster.admin:
+    description: Access to all StreakMaster commands
+    default: op
+  streakmaster.command.add:
+    description: Add streak to player
+    default: op
+  streakmaster.command.remove:
+    description: Remove streak from player
+    default: op
+  streakmaster.command.set:
+    description: Set player streak
+    default: op
+  streakmaster.command.reset:
+    description: Reset player streak
+    default: op
+  streakmaster.command.addrecord:
+    description: Add to player record
+    default: op
+  streakmaster.command.removerecord:
+    description: Remove from player record
+    default: op
+  streakmaster.command.reload:
+    description: Reload configuration
+    default: op

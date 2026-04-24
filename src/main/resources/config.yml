@@ -1,0 +1,216 @@
+
+# StreakMaster - Premium Killstreak Plugin
+
+# Killstreak sisteminin aktif olması için sunucuda bulunması gereken minimum oyuncu sayısı
+minimum-players: 3
+
+# Aktif killstreak'i olan bir oyuncu çıkış yaptığında streak'i sıfırlansın mı?
+reset-on-quit: false
+
+# ====================================
+# ANTI-FARM SİSTEMİ (Gelişmiş Koruma)
+# ====================================
+anti-farm:
+  # Aynı IP'den öldürme koruması
+  same-ip:
+    enabled: true
+    # Aynı IP'den öldürme durumunda konsola log yazılsın mı?
+    log: true
+  
+  # Aynı oyuncuyu tekrar öldürme koruması
+  same-player:
+    enabled: true
+    # Aynı oyuncuyu tekrar öldürmeden önce kaç farklı oyuncu öldürmeli?
+    required-different-kills: 1
+    # Log yazılsın mı?
+    log: true
+  
+  # Gelişmiş desen algılama sistemi
+  pattern-detection:
+    # Ana açma/kapama
+    enabled: true
+    
+    # İki oyuncu birbirini dönüşümlü öldürme algılama (A->B->A->B)
+    alternating-kills:
+      enabled: true
+      # Kaç dönüşümlü öldürme tespit edilirse engellensin?
+      threshold: 3
+      # Kontrol edilecek zaman aralığı (saniye)
+      time-window: 300
+    
+    # Küçük oyuncu havuzu algılama (aynı 3-4 kişi sürekli)
+    small-pool:
+      enabled: true
+      # Son kaç öldürmeye bakılacak?
+      check-last-kills: 10
+      # Bu öldürmeler içinde kaç benzersiz oyuncu olmalı? (daha azsa farm)
+      minimum-unique-players: 5
+    
+    # Hızlı tekrarlı öldürme algılama
+    rapid-repeated:
+      enabled: true
+      # Aynı oyuncuyu kaç saniye içinde tekrar öldürürse şüpheli sayılsın?
+      time-threshold: 60
+      # Bu kaç kez olursa engellensin?
+      repeat-count: 3
+    
+    # Tespit edildiğinde ne yapılsın?
+    action:
+      # Streak kazanımı bloklanır
+      block-streak-gain: true
+      # Konsola log yazılır
+      log: true
+      # Yöneticilere bildirim gönderilir (streakmaster.admin yetkisine)
+      notify-admins: true
+
+# ====================================
+# MİLESTONE SİSTEMİ (Özel Ödül Basamakları)
+# ====================================
+milestones:
+  # Her milestone için özel ayarlar
+  "3":
+    message: "&6⚔ &e{player} &f3 &ckillstreak &fyaptı! &6⚔"
+    sound: "ENTITY_PLAYER_LEVELUP"
+    volume: 1.0
+    pitch: 1.0
+    broadcast: false
+    commands:
+      - "give {player} diamond 1"
+  
+  "5":
+    message: "&6⚔ &e{player} &6&l5 KILLSTREAK &fyaptı! &6⚔"
+    sound: "ENTITY_PLAYER_LEVELUP"
+    volume: 1.0
+    pitch: 1.2
+    broadcast: true
+    commands:
+      - "give {player} diamond 3"
+      - "give {player} golden_apple 2"
+  
+  "10":
+    message: "&c⚡ &e{player} &c&l10 KILLSTREAK &c⚡ &fİnanılmaz!"
+    sound: "ENTITY_ENDER_DRAGON_GROWL"
+    volume: 1.0
+    pitch: 1.5
+    broadcast: true
+    commands:
+      - "give {player} diamond 5"
+      - "give {player} golden_apple 5"
+  
+  "15":
+    message: "&c⚡ &4&l{player} 15 KILLSTREAK! &c⚡ &fDurdurulamaz!"
+    sound: "ENTITY_WITHER_SPAWN"
+    volume: 0.5
+    pitch: 2.0
+    broadcast: true
+    commands:
+      - "give {player} diamond_block 1"
+      - "give {player} enchanted_golden_apple 1"
+  
+  "20":
+    message: "&5&l★ &d{player} &5&l20 KILLSTREAK! &5&l★ &fEFSANE!"
+    sound: "UI_TOAST_CHALLENGE_COMPLETE"
+    volume: 1.0
+    pitch: 1.0
+    broadcast: true
+    commands:
+      - "give {player} diamond_block 2"
+      - "give {player} enchanted_golden_apple 2"
+      - "give {player} netherite_ingot 1"
+  
+  "25":
+    message: "&b&l❆ &f{player} &b&l25 KILLSTREAK! &b&l❆ &fTANRISAL!"
+    sound: "ENTITY_LIGHTNING_BOLT_THUNDER"
+    volume: 0.8
+    pitch: 1.5
+    broadcast: true
+    commands:
+      - "give {player} diamond_block 3"
+      - "give {player} netherite_ingot 2"
+  
+  "30":
+    message: "&4&l⚔ &c{player} &4&l30 KILLSTREAK! &4&l⚔ &fKATLİAM!"
+    sound: "ENTITY_WITHER_DEATH"
+    volume: 1.0
+    pitch: 1.0
+    broadcast: true
+    commands:
+      - "give {player} diamond_block 5"
+      - "give {player} netherite_ingot 3"
+
+# ====================================
+# INTERVAL ÖDÜL SİSTEMİ (Aralık Bazlı)
+# ====================================
+interval-rewards:
+  # 5-50 arası her 5'te bir
+  "5-50":
+    interval: 5
+    commands:
+      - "eco give {player} 100"
+  
+  # 51-100 arası her 10'da bir
+  "51-100":
+    interval: 10
+    commands:
+      - "eco give {player} 500"
+  
+  # 101-200 arası her 25'te bir
+  "101-200":
+    interval: 25
+    commands:
+      - "eco give {player} 1000"
+      - "give {player} diamond_block 1"
+
+# ====================================
+# MESAJLAR (Prefix YOK - Premium Stil)
+# ====================================
+messages:
+  # Oyuncuya gönderilen özel mesajlar
+  kill:
+    # Her öldürmede gönderilen mesaj
+    message: "&6⚔ &fKillstreak: &e{streak} &7(Rekor: &6{record}&7)"
+    sound: "ENTITY_EXPERIENCE_ORB_PICKUP"
+    volume: 0.5
+    pitch: 1.5
+  
+  death:
+    # Öldüğünde gönderilen mesaj
+    message: "&c☠ &7Öldün! Streak sıfırlandı. &7(En yüksek: &6{record}&7)"
+    sound: "ENTITY_VILLAGER_NO"
+    volume: 0.5
+    pitch: 0.8
+  
+  ended:
+    # Birinin streak'i sona erdiğinde (broadcast)
+    message: "&e{killer} &7oyuncusunun &c{streak} &7killstreak'i &e{victim} &7tarafından sonlandırıldı!"
+    broadcast: true
+    sound: "ENTITY_LIGHTNING_BOLT_IMPACT"
+    volume: 0.3
+    pitch: 1.2
+  
+  # Komut mesajları
+  command:
+    no-permission: "&cBu komutu kullanma yetkiniz yok!"
+    player-not-found: "&cOyuncu bulunamadı!"
+    invalid-amount: "&cGeçersiz sayı!"
+    streak-added: "&a{player} oyuncusuna {amount} streak eklendi!"
+    streak-removed: "&a{player} oyuncusundan {amount} streak kaldırıldı!"
+    streak-set: "&a{player} oyuncusunun streak'i {amount} olarak ayarlandı!"
+    streak-reset: "&a{player} oyuncusunun streak'i sıfırlandı!"
+    record-added: "&a{player} oyuncusunun rekoruna {amount} eklendi!"
+    record-removed: "&a{player} oyuncusunun rekorundan {amount} kaldırıldı!"
+    reload-success: "&aKonfigürasyon başarıyla yenilendi!"
+    usage: "&cKullanım: /streak <add|remove|set|reset|addrecord|removerecord|reload> [args]"
+  
+  # Anti-farm bildirimleri
+  anti-farm:
+    same-ip: "&c[Anti-Farm] &e{player} &7aynı IP'den öldürme yaptı!"
+    same-player: "&c[Anti-Farm] &e{player} &7aynı oyuncuyu tekrar öldürdü!"
+    pattern-detected: "&c[Anti-Farm] &e{player} &7farm pattern tespit edildi: &f{pattern}"
+
+# ====================================
+# SES AYARLARI (Global)
+# ====================================
+sounds:
+  # Tüm sunucuya ses çalsın mı? (milestone broadcast için)
+  global-milestone-sounds: true
